@@ -1,0 +1,40 @@
+/*
+ * 屏幕模块编译期配置。
+ *
+ * 换屏只改这里：选板子、选屏幕（面板 + 触摸）、选默认方向。
+ * 新增屏幕的步骤见 README。
+ */
+#ifndef SCREEN_CONFIG_H
+#define SCREEN_CONFIG_H
+
+/* ---------------- 板卡 ---------------- */
+#define SCREEN_BOARD_UNO_R4_WIFI 1
+#define SCREEN_BOARD SCREEN_BOARD_UNO_R4_WIFI
+
+/* ---------------- 屏幕 ---------------- */
+/* 设备 = 面板 + 触摸组合，注册表见 screen_devices.h。 */
+#define SCREEN_DEVICE_P128H002_IPS_CTP 0
+#define SCREEN_DEVICE SCREEN_DEVICE_P128H002_IPS_CTP
+
+/* ---------------- 触摸驱动 ---------------- */
+/* P128H002 模组使用 CST816S/T（寄存器 0x02 触点数、0x03..0x06 坐标、0xA7 芯片 ID）；
+ * FT6336U 供使用同款 FPC 触摸排线的其它模组选择。 */
+#define SCREEN_TOUCH_DRIVER_FT6336U 0
+#define SCREEN_TOUCH_DRIVER_CST816 1
+#define SCREEN_TOUCH_DRIVER SCREEN_TOUCH_DRIVER_CST816
+
+/* ---------------- 运行参数 ---------------- */
+/* 上电方向：0/1 竖屏，2/3 横屏（相对面板原生方向）。 */
+#define SCREEN_DEFAULT_ROTATION 0
+
+/* 发送缓冲区字节数，必须同时被 2（RGB565）和 3（RGB666）整除：
+ * 5760 = 2880 像素 x 2 字节 = 1920 像素 x 3 字节；减少 DTC 启动并保留充足堆栈。 */
+#define SCREEN_TX_BYTES 5760
+
+/* 1 = 初始化时通过串口 115200 打印面板名、触摸 ID 和结果。 */
+#define SCREEN_DEBUG 1
+
+/* ---------------- 板卡引脚映射 ---------------- */
+#include "boards/uno_r4_wifi.h"
+
+#endif
